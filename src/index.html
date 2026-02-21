@@ -18,9 +18,40 @@
   <script crossorigin="anonymous" src="./external/xr/xr.js" async="true" data-preload-chunks="face, slam">
   </script>
 
+<style>
+  #scan-prompt {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  #scan-prompt img {
+    width: min(45vw, 200px);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  #scan-prompt p {
+    margin-top: 14px;
+    color: #fff;
+    font: 600 15px/1.3 system-ui, sans-serif;
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  }
+  #scan-prompt.hidden { display: none; }
+  #scan-prompt.loading img { display: none; }
+  #scan-prompt.loading p { font-size: 18px; }
+</style>
 </head>
 
 <body>
+<div id="scan-prompt">
+  <img src="image-targets/Ripple_target.png" alt="Target">
+  <p>Point your camera at the image</p>
+</div>
 <script src="bundle.js"></script>
 
 </body>

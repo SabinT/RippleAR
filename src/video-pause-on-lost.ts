@@ -27,6 +27,28 @@ const getVideoElement = (material: any): HTMLVideoElement | null => {
   return null
 }
 
+const hideScanPrompt = () => {
+  const el = document.getElementById('scan-prompt')
+  if (el) el.classList.add('hidden')
+}
+
+const showScanPromptLoading = () => {
+  const el = document.getElementById('scan-prompt')
+  if (!el) return
+  el.classList.remove('hidden')
+  el.classList.add('loading')
+  const p = el.querySelector('p')
+  if (p) p.textContent = 'Loading\u2026'
+}
+
+const showScanPrompt = () => {
+  const el = document.getElementById('scan-prompt')
+  if (!el) return
+  el.classList.remove('hidden', 'loading')
+  const p = el.querySelector('p')
+  if (p) p.textContent = 'Point your camera at the image'
+}
+
 // Make the plane transparent (invisible but still present in scene)
 const hideVideoPlane = (material: any) => {
   if (!material) return
@@ -87,6 +109,7 @@ ecs.registerComponent({
             videoReady = true
             if (targetFound) {
               showVideoPlane(material)
+              hideScanPrompt()
             }
           }
           if ('requestVideoFrameCallback' in el) {
@@ -122,6 +145,13 @@ ecs.registerComponent({
             c.paused = false
           })
 
+          // Show loading state until video is actually playing
+          if (videoReady) {
+            hideScanPrompt()
+          } else {
+            showScanPromptLoading()
+          }
+
           // Only show the plane if the video has already decoded a frame
           if (videoReady) {
             const material = getThreeMaterial(world, videoPlayer)
@@ -136,6 +166,7 @@ ecs.registerComponent({
 
         if (name === imageTargetName) {
           targetFound = false
+          showScanPrompt()
           // Hide the plane and pause
           const material = getThreeMaterial(world, videoPlayer)
           hideVideoPlane(material)
