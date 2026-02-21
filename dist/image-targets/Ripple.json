@@ -1,0 +1,18 @@
+{
+  "imagePath": "image-targets/Ripple_target.png",
+  "name": "Ripple",
+  "type": "PLANAR",
+  "properties": {
+    "top": 0,
+    "left": 1,
+    "width": 722,
+    "height": 962,
+    "isRotated": false,
+    "originalWidth": 723,
+    "originalHeight": 962
+  },
+  "userMetadataIsJson": true,
+  "loadAutomatically": true,
+  "created": 1750398800977,
+  "updated": 1750403597056
+}
